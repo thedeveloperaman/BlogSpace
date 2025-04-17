@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Blog{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="site-container">
+    <div class="site-content">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="{% url 'blog:home' %}" class="nav-logo">BlogSpace</a>
+                <div class="nav-links">
+                    <a href="{% url 'blog:post_new' %}" class="nav-button">New Post</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="toast {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 BlogSpace. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

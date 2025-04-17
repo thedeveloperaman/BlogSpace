@@ -1,0 +1,58 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}{% if object %}Edit{% else %}New{% endif %} Post{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1 class="form-title">{% if object %}Edit{% else %}New{% endif %} Post</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        {% if field.name == 'image' %}
+        <div class="image-field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% if object and object.image %}
+            <div class="current-image">
+                <img src="{{ object.image.url }}" alt="Current image">
+                <div class="image-actions">
+                    <label class="button button-primary">
+                        Replace
+                        <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}" class="hidden-input">
+                    </label>
+                    <label class="button button-danger">
+                        Remove
+                        <input type="checkbox" name="{{ field.name }}-clear" id="{{ field.id_for_label }}_clear"
+                            class="hidden-input">
+                    </label>
+                </div>
+            </div>
+            {% else %}
+            {{ field }}
+            {% endif %}
+        </div>
+        {% else %}
+        <p>
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </p>
+        {% endif %}
+        {% endfor %}
+        <div class="form-actions">
+            <button type="submit" class="button button-success">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                {% if object %}Update{% else %}Create{% endif %}
+            </button>
+            <a href="{% url 'blog:home' %}" class="button button-cancel">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
