@@ -95,6 +95,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'blog_project' / 'media'
 
+# LOGIN_URL = '/login/'
+
+
 # Ensure subdirectories for different types of uploads
 POST_IMAGES_DIR = 'post_images'
 UPLOAD_DIRS = [

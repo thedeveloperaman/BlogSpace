@@ -23,10 +23,11 @@ class PostDetailView(DetailView):
 class PostCreateView(CreateView):  # Removed LoginRequiredMixin
     model = Post
     template_name = 'blog/post_form.html'
-    fields = ['title', 'content', 'category', 'image']
+    fields = ['title', 'content', 'category', 'image', 'author']  # add 'author' if it's a CharField
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        # If author is a CharField, the form will provide it; otherwise, set a default
+        # form.instance.author = "Anonymous"  # Uncomment if you want to set a default
         messages.success(self.request, "Post created successfully!")
         return super().form_valid(form)
 
